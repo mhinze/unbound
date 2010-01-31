@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unbound", "Unbound\Unbound.csproj", "{68A13F64-D0A9-4888-B14F-D873867CD9B4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unbound.Tests", "Unbound.Tests\Unbound.Tests.csproj", "{18E45F78-A685-41BE-9229-A3A8355E20DD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unbound.Performance", "Unbound.Performance\Unbound.Performance.csproj", "{78493F11-4A79-40AF-8C3F-A92D5AB37A9F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{68A13F64-D0A9-4888-B14F-D873867CD9B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68A13F64-D0A9-4888-B14F-D873867CD9B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68A13F64-D0A9-4888-B14F-D873867CD9B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68A13F64-D0A9-4888-B14F-D873867CD9B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18E45F78-A685-41BE-9229-A3A8355E20DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18E45F78-A685-41BE-9229-A3A8355E20DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18E45F78-A685-41BE-9229-A3A8355E20DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18E45F78-A685-41BE-9229-A3A8355E20DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78493F11-4A79-40AF-8C3F-A92D5AB37A9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78493F11-4A79-40AF-8C3F-A92D5AB37A9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78493F11-4A79-40AF-8C3F-A92D5AB37A9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78493F11-4A79-40AF-8C3F-A92D5AB37A9F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -6,6 +6,19 @@ using Unbound.Tests.Unbinding.Configuration;
 
 namespace Unbound.Tests.Unbinding
 {
+	public class FooUnbinder : ISpecificValueUnbinder
+	{
+		public string UnbindValue(object value)
+		{
+			return ((specification.Foo) value).Id.ToString();
+		}
+
+		public bool AppropriatelyUnbinds(object value)
+		{
+			return value is specification.Foo;
+		}
+	}
+
 	public class specification
 	{
 		protected static DefaultModelBinder Binder = new DefaultModelBinder();
@@ -25,11 +38,10 @@ namespace Unbound.Tests.Unbinding
 		Because of = () =>
 		             	{
 		             		Unbound = Request.ToHttpDictionary(ModelName);
-		             		ModelBindingContext bindingContext = Unbound.BuildContext(ModelType, ModelName);
+		             		var bindingContext = Unbound.BuildContext(ModelType, ModelName);
 		             		Bound = Binder.BindModel(new ControllerContext(), bindingContext);
 		             	};
 
-		It should_bind_type = () => Bound.ShouldBeOfType<int>();
 		It should_bind_value = () => Bound.ShouldEqual(3);
 
 		public class Foo

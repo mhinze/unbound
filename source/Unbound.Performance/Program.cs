@@ -8,9 +8,11 @@ namespace Unbound.Performance
 	{
 		public static void Main()
 		{
-			Big[] graph = BigBuilder.BuildGraph();
-			Console.WriteLine("build graph");
-			new Unbinder().Unbind(graph, "baz");
+//			Big[] graph = BigBuilder.BuildGraph();
+//			Console.WriteLine("build graph");
+//			new Unbinder().Unbind(graph, "baz");
+
+			new Unbinder().Unbind(Enumerable.Range(int.MinValue, int.MaxValue), "foo");
 		}
 	}
 

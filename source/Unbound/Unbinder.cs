@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 
 namespace Unbound
 {
@@ -11,11 +12,19 @@ namespace Unbound
 		readonly ITypeSimplicityEvaluator _typeSimplicityEvaluator;
 		readonly IValueUnbinder _valueUnbinder;
 
-		public Unbinder()
+		public Unbinder(ITypeDescriptor typeDescriptor,
+		                ITypeSimplicityEvaluator typeSimplicityEvaluator,
+		                IValueUnbinder valueUnbinder)
 		{
-			_typeSimplicityEvaluator = new CachedTypeSimplicityEvaluator();
-			_typeDescriptor = new CachedTypeDescriptor();
-			_valueUnbinder = new ValueUnbinder();
+			_typeDescriptor = typeDescriptor;
+			_typeSimplicityEvaluator = typeSimplicityEvaluator;
+			_valueUnbinder = valueUnbinder;
+		}
+
+		public Unbinder() : this(new CachedTypeDescriptor(),
+		                         new CachedTypeSimplicityEvaluator(),
+		                         new ValueUnbinder())
+		{
 		}
 
 		public IDictionary<string, string> Unbind(object request, string prefix)
@@ -23,7 +32,7 @@ namespace Unbound
 			var result = new Dictionary<string, string>();
 			var type = request.GetType();
 
-			if (IsSimple(type) || IsReadyForUnbinding(request))
+			if (IsSimple(type) || HasCustomUnbinderAvailable(request))
 			{
 				BindSimpleValue(result, request, prefix);
 				return result;
@@ -64,17 +73,17 @@ namespace Unbound
 		void BindEnumerable(IDictionary<string, string> result, IEnumerable toSerialize, string prefix)
 		{
 			var counter = 0;
+			var prefixFormatString = prefix + "[{0}]";
 			foreach (var element in toSerialize)
 			{
-				var modifiedPrefix = string.Format("{0}[{1}]", prefix, counter++);
+				var modifiedPrefix = string.Format(prefixFormatString, counter++);
 				Merge(result, Unbind(element, modifiedPrefix));
 			}
 		}
 
-		static bool IsReadyForUnbinding(object request)
+		static bool HasCustomUnbinderAvailable(object request)
 		{
-			var ready = new CustomBinderAvailability().IsCustomBinderAvailable(request);
-			return ready;
+			return SpecificValueUnbinderFactory.CustomUnbinders().Where(x => x.AppropriatelyUnbinds(request)).Any();
 		}
 
 		void BindSimpleValue(IDictionary<string, string> result, object request, string prefix)
@@ -83,11 +92,11 @@ namespace Unbound
 			result.Add(prefix, value);
 		}
 
-		static void Merge(IDictionary<string, string> left, IEnumerable<KeyValuePair<string, string>> right)
+		static void Merge(IDictionary<string, string> target, IEnumerable<KeyValuePair<string, string>> additionalPairs)
 		{
-			foreach (var pair in right)
+			foreach (var pair in additionalPairs)
 			{
-				left.Add(pair.Key, pair.Value);
+				target.Add(pair.Key, pair.Value);
 			}
 		}
 

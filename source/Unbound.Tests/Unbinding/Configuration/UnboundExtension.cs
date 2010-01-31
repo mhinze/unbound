@@ -2,11 +2,19 @@ using System.Collections.Generic;
 
 namespace Unbound.Tests.Unbinding.Configuration
 {
+/* I've traditionally used an extension method like this.  blah.ToHttpDictionary()
+ * Pretty useful sometimes. 
+ * If you need a custom unbinder, implement ISpecificValueUnbinder and plug it in to the CustomUnbinders.
+ * A custom unbinder would take a specific value from an object - one that your model binding
+ * infrastructure would use to recreate your object.  This is used in our system for entities and 
+ * enumeration classes.
+ */
+
 	public static class UnboundExtension
 	{
 		static UnboundExtension()
 		{
-			SpecificValueUnbinderFactory.CustomBinders
+			SpecificValueUnbinderFactory.CustomUnbinders
 				= () => new ISpecificValueUnbinder[]
 				        	{
 				        		new FooUnbinder(),
@@ -15,8 +23,7 @@ namespace Unbound.Tests.Unbinding.Configuration
 
 		public static IDictionary<string, string> ToHttpDictionary(this object request, string prefix)
 		{
-			IUnbinder unbinder = new Unbinder();
-			return unbinder.Unbind(request, prefix);
+			return new Unbinder().Unbind(request, prefix);
 		}
 	}
 }

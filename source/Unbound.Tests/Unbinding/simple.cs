@@ -13,17 +13,4 @@ namespace Unbound.Tests.Unbinding
 		It should_bind_type = () => Bound.ShouldBeOfType<int>();
 		It should_bind_value = () => Bound.ShouldEqual(42);
 	}
-
-	public class FooUnbinder : ISpecificValueUnbinder
-	{
-		public string UnbindValue(object value)
-		{
-			return ((specification.Foo) value).Id.ToString();
-		}
-
-		public bool IsSatisfiedBy(object value)
-		{
-			return value is specification.Foo;
-		}
-	}
 }

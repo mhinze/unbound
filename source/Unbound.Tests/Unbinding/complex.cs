@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Machine.Specifications;
 
 namespace Unbound.Tests.Unbinding
@@ -7,7 +6,11 @@ namespace Unbound.Tests.Unbinding
 	{
 		Establish context = () =>
 		                    	{
-		                    		Request = new Foo {Number = 42, Text = "Something"};
+		                    		Request = new Foo
+		                    		          	{
+		                    		          		Number = 42,
+		                    		          		Text = "Something"
+		                    		          	};
 		                    		ModelName = "foo";
 		                    	};
 

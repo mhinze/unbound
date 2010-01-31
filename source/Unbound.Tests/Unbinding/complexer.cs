@@ -7,18 +7,26 @@ namespace Unbound.Tests.Unbinding
 		Establish context = () =>
 		                    	{
 		                    		ModelName = "foo";
-		                    		Request = new Foo {Number = 42, Text = "Bar", Barf = new Foo.Bar {Digit = 12}};
+		                    		Request = new Foo
+		                    		          	{
+		                    		          		Number = 42,
+		                    		          		Text = "Bar",
+		                    		          		Barf = new Foo.Bar
+		                    		          		       	{
+		                    		          		       		Digit = 12
+		                    		          		       	}
+		                    		          	};
 		                    	};
+
+		It should_bind_complexer_values = () => ((Foo) Bound).Barf.Digit.ShouldEqual(12);
 
 		It should_bind_to_type = () => Bound.ShouldBeOfType<Foo>();
 
 		It should_bind_values = () =>
 		                        	{
-		                        		((Foo)Bound).Number.ShouldEqual(42);
-		                        		((Foo)Bound).Text.ShouldEqual("Bar");
+		                        		((Foo) Bound).Number.ShouldEqual(42);
+		                        		((Foo) Bound).Text.ShouldEqual("Bar");
 		                        	};
-
-		It should_bind_complexer_values = () => ((Foo)Bound).Barf.Digit.ShouldEqual(12);
 
 		public class Foo
 		{

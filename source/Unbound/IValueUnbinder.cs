@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace Unbound
 {
 	public interface IValueUnbinder
@@ -9,14 +7,14 @@ namespace Unbound
 
 	public interface ISpecificValueUnbinder : IValueUnbinder
 	{
-		bool IsSatisfiedBy(object value);
+		bool AppropriatelyUnbinds(object value);
 	}
 
 	public class ValueUnbinder : IValueUnbinder
 	{
 		public string UnbindValue(object value)
 		{
-			IValueUnbinder unbinder = SpecificValueUnbinderFactory.GetValueUnbinder(value);
+			var unbinder = SpecificValueUnbinderFactory.GetValueUnbinder(value);
 			return unbinder.UnbindValue(value);
 		}
 	}
@@ -28,7 +26,7 @@ namespace Unbound
 			return value.ToString();
 		}
 
-		public bool IsSatisfiedBy(object value)
+		public bool AppropriatelyUnbinds(object value)
 		{
 			return true;
 		}
